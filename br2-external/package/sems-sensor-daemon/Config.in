@@ -1,0 +1,4 @@
+config BR2_PACKAGE_SEMS_SENSOR_DAEMON
+    bool "sems-sensor-daemon"
+    help
+      Daemon de sensores para SEMS (lectura I2C y logging).
