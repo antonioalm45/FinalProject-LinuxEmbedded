@@ -1,3 +1,0 @@
-menu "SEMS external options"
-    source "$BR2_EXTERNAL_SEMS_PATH/package/sems-sensor-daemon/Config.in"
-endmenu

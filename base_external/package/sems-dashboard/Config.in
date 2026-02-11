@@ -1,0 +1,8 @@
+config BR2_PACKAGE_SEMS_DASHBOARD
+    bool "SEMS Web Dashboard (Node + React)"
+    select BR2_PACKAGE_NODEJS
+    help
+      Instala el dashboard de SEMS.
+      Requiere que el repo tenga:
+        - frontend/dist
+        - backend/node_modules (solo runtime)

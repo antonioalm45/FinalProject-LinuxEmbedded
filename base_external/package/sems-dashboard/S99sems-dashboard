@@ -1,0 +1,40 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          sems-dashboard
+# Required-Start:    $network
+# Required-Stop:
+# Default-Start:     3 4 5
+# Short-Description: SEMS Dashboard (Node + React)
+### END INIT INFO
+
+. /etc/default/sems-dashboard 2>/dev/null
+
+DAEMON_DIR=${DAEMON_DIR:-/opt/sems-web-dashboard/backend}
+NODE=${NODE:-/usr/bin/node}
+DAEMON=${DAEMON:-$DAEMON_DIR/server.js}
+LOG=${LOG:-/var/log/sems-dashboard.log}
+PIDFILE=${PIDFILE:-/var/run/sems-dashboard.pid}
+USER=${USER:-root}       # cambia a 'sems' si creas usuario
+ENV_PORT=${PORT:-4000}   # puerto por defecto
+
+start() {
+  echo "Starting SEMS Dashboard..."
+  mkdir -p "$(dirname "$LOG")" /var/run
+  cd "$DAEMON_DIR" || exit 1
+  # Exporta PORT para que server.js lo use si lo soporta
+  PORT="$ENV_PORT" start-stop-daemon -S -p "$PIDFILE" -b -x "$NODE" -- "$DAEMON" >> "$LOG" 2>&1
+}
+
+stop() {
+  echo "Stopping SEMS Dashboard..."
+  start-stop-daemon -K -p "$PIDFILE" >/dev/null 2>&1 || killall node >/dev/null 2>&1 || true
+  rm -f "$PIDFILE"
+}
+
+case "$1" in
+  start) start ;;
+  stop) stop ;;
+  restart) stop; sleep 1; start ;;
+  status) [ -f "$PIDFILE" ] && echo "running" || echo "stopped" ;;
+  *) echo "Usage: $0 {start|stop|restart|status}" ;;
+esac

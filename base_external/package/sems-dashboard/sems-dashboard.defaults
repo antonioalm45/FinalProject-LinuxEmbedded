@@ -1,0 +1,7 @@
+# /etc/default/sems-dashboard
+PORT=4000
+DAEMON_DIR=/opt/sems-web-dashboard/backend
+NODE=/usr/bin/node
+LOG=/var/log/sems-dashboard.log
+PIDFILE=/var/run/sems-dashboard.PIDFILE
+USER=root

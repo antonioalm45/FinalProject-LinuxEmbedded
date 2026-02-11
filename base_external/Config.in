@@ -1,0 +1,3 @@
+menu "SEMS external options"
+    source "$BR2_EXTERNAL_BASE_EXTERNAL_PATH/package/sems-dashboard/Config.in"
+endmenu
